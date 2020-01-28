@@ -3,7 +3,6 @@
 #include "Ticket.h"
 //#include "Database.h"
 #include "TimeInfo.h"
-#include "arduino.h"
 
 using namespace std;
 
@@ -22,10 +21,10 @@ int main() {
         TimeInfo tim;
 
 
-
         /* fetching from db and setting user class "name" and other user data */
         user->getUserInfo(*db, 3);
         cout << user->getName() << user->getSurname() << " " << user->getBirthDate() << " " << user->getGender() << endl;
+
 
 
     }
