@@ -3,6 +3,7 @@
 #include "Ticket.h"
 //#include "Database.h"
 #include "TimeInfo.h"
+#include "Bank.h"
 
 using namespace std;
 
@@ -13,6 +14,7 @@ int main() {
     cout << "Choose which scenario to be executed\n0 -> PAYMENT\n1 -> VALIDATE BUS TICKET\n";
     cin >> scenario;
 
+    /* this is the ticket validation scenario */
     if (scenario) {
 
         User *user = new User();
@@ -25,6 +27,18 @@ int main() {
         user->getUserInfo(*db, 3);
         cout << user->getName() << user->getSurname() << " " << user->getBirthDate() << " " << user->getGender() << endl;
 
+        delete user, tic, tim, db;
+
+    }
+    /* this is the ticket validation scenario */
+    else{
+
+        User *user = new User();
+        Bank *bank = new Bank(*user);
+
+        //get a shop and an item randomly from the list of the available shops and ask for payment
+        //then when a RFiD tag is near check if the money are enough to continue.
+        //subsequently move the money amount (item.price) from the buyer to the seller, that's it, easy ?
 
 
     }

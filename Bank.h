@@ -5,7 +5,11 @@
 #include "User.h"
 
 class Bank : User {
+private:
+    User user;
 
+public:
+    Bank(User &user);
 
 };
 

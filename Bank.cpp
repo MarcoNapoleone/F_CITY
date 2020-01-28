@@ -3,3 +3,7 @@
 //
 
 #include "Bank.h"
+
+Bank::Bank(User &user) {
+    this->user=user;
+}

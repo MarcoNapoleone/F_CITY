@@ -7,6 +7,14 @@ using namespace std;
 
 class User {
 
+private:
+
+    string name;
+    string surname;
+    int rfid;
+    time_t birth_date;
+    bool gender; //0 -> female; 1 -> male
+
 public:
 
     User() = default;
@@ -32,14 +40,6 @@ public:
     bool getGender() const;
 
     void setGender(bool gender);
-
-
-private:
-    string name;
-    string surname;
-    int rfid;
-    time_t birth_date;
-    bool gender; //0 -> female; 1 -> male
 
 };
 
