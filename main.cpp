@@ -3,6 +3,7 @@
 #include "Ticket.h"
 //#include "Database.h"
 #include "TimeInfo.h"
+#include "arduino.h"
 
 using namespace std;
 
