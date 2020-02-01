@@ -35,7 +35,9 @@ int main() {
 
         User *user = new User();
         Bank *bank = new Bank(*user);
+        //
 
+    //
         //get a shop and an item randomly from the list of the available shops and ask for payment
         //then when a RFiD tag is near check if the money are enough to continue.
         //subsequently move the money amount (item.price) from the buyer to the seller, that's it, easy ?
