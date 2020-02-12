@@ -10,7 +10,7 @@ Database::Database(const string &host, const string &userName, const string &pw)
     Database::pw = pw;
 }
 
-bool Database::test_connection() {
+bool Database::testConnection() {
 
     bool test = 0;
     try {

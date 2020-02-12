@@ -19,13 +19,13 @@ class Database {
 private:
 
     /* database credentials declared as members */
-    string host = "tcp://remotemysql.com:3306";
-    string userName = "bvYXzisyGu";
-    string pw = "DfBbNrL9ER";
+    string host;
+    string userName;
+    string pw;
 
 public:
 
-    /* sql var */
+    //! sql var */
     sql::Driver *driver;
     sql::Connection *con;
 
@@ -34,9 +34,10 @@ public:
 
     /* constructor */
     Database(const string &host, const string &userName, const string &pw);
+    Database() = default;
 
     /* boolean method for initialization of sql var and testing if connection works */
-    bool test_connection();
+    bool testConnection();
 
     /* destructor */
     virtual ~Database();

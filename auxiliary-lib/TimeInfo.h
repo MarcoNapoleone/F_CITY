@@ -6,7 +6,7 @@
 #define F_CITY_TIMEINFO_H
 
 #include "time.h"
-#include "Ticket.h"
+#include "../Transport/Ticket.h"
 
 using namespace std;
 
@@ -18,7 +18,8 @@ public:
     tm *timePtr = localtime(&t);
 
     /* to print time in human friendly format */
-    void printTime();
+    string timeDate();
+    string timeHour();
 
     /* getter */
     tm *getTimePtr() const;

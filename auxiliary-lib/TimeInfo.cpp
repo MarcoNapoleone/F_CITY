@@ -1,6 +1,6 @@
 #include "TimeInfo.h"
 
-bool TimeInfo::operator >= (Ticket tic) {
+bool TimeInfo::operator>=(Ticket tic) {
 
     bool isBigger;
 
@@ -10,11 +10,14 @@ bool TimeInfo::operator >= (Ticket tic) {
 };
 
 
-void TimeInfo::printTime() {
+string TimeInfo::TameDate() {
+    string timeDate = timePtr->tm_mday + '-' + (timePtr->tm_mon + 1) + '-' + (timePtr->tm_year + 1900);
+    return (timeDate);
+}
 
-    cout << timePtr->tm_mday << "-" << timePtr->tm_mon + 1 << "-" << timePtr->tm_year + 1900 << endl;
-    cout << timePtr->tm_hour << ":" << timePtr->tm_min << endl;
-
+string TimeInfo::timeHour() {
+    string timeHour = timePtr->tm_hour + ':' + timePtr->tm_min;
+    return (timeHour);
 }
 
 tm *TimeInfo::getTimePtr() const {

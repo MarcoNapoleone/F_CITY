@@ -1,29 +1,42 @@
 #ifndef _USER_H
 #define _USER_H
 
-#include "Database.h"
+#include "auxiliary-lib/Database.h"
 
 using namespace std;
 
 class User {
-
 private:
 
+    Database db;
     string name;
     string surname;
+
     int rfid;
+    int id;
     time_t birth_date;
     bool gender; //0 -> female; 1 -> male
 
+    /* fetcher from db to ticket class, passing db as reference */
+    void fetchUserInfo(const int id);
+    void fetchUserInfo(string UID);
+
 public:
+
+    User(Database &db, int id);
+
+    User(Database &db, string UID);
 
     User() = default;
 
-    /* fetcher from db to ticket class, passing db as reference */
-    void getUserInfo(Database &db, const int id);
-
     /* getter and setter */
     void setName(const string &name);
+
+    const Database &getDb() const;
+
+    int getId() const;
+
+    void setId(int id);
 
     void setSurname(const string &surname);
 

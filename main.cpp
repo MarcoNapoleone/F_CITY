@@ -1,48 +1,111 @@
 #include <iostream>
 #include "User.h"
-#include "Ticket.h"
-//#include "Database.h"
-#include "TimeInfo.h"
-#include "Bank.h"
+#include "Transport/Ticket.h"
+#include "auxiliary-lib/TimeInfo.h"
+#include "Payment/Bank.h"
+#include "Payment/Shop.h"
+#include <stdlib.h>
+#include "Hardware/Lcd.h"
+#include "Hardware/Rc522.h"
+#include "Hardware/Hardware.h"
 
-using namespace std;
+#define host "tcp://remotemysql.com:3306"
+#define userName "bvYXzisyGu"
+#define pw "DfBbNrL9ER"
+
 
 int main() {
 
-    /* We are about to simulate 2 different scenarios */
-    bool scenario;
-    cout << "Choose which scenario to be executed\n0 -> PAYMENT\n1 -> VALIDATE BUS TICKET\n";
-    cin >> scenario;
+    Hardware interface;
+    Lcd lcd;
+    Rc522 rfid;
 
-    /* this is the ticket validation scenario */
-    if (scenario) {
+    while (true) {
 
-        User *user = new User();
-        Ticket *tic = new Ticket(*user);
-        Database *db = new Database("tcp://remotemysql.com:3306", "bvYXzisyGu", "DfBbNrL9ER");
-        TimeInfo tim;
+        /*! Choose which scenario to be executed: 0 -> PAYMENT, 1 -> VALIDATE BUS TICKET" */
+        lcd.print("Choose: ", true);
+        int choice = interface.buttonChoice();
 
+        /* Simulating 2 different scenarios */
+        if (choice) {
 
-        /* fetching from db and setting user class "name" and other user data */
-        user->getUserInfo(*db, 3);
-        cout << user->getName() << user->getSurname() << " " << user->getBirthDate() << " " << user->getGender() << endl;
+            /*! ticket validation */
+            interface.setLed(LED_R, 1);
+            lcd.print("Ticket", true);
+            lcd.print("stamp: ", false, 0, 1);
+            sleep(1);
 
-        delete user, tic, tim, db;
+            TimeInfo tim;
 
+            lcd.print(tim.timeDate(), true);
+            lcd.print("Stamp", false, 0, 1);
+
+            Database *db = new Database(host, userName, pw);
+            if(db->testConnection()) {
+                lcd.print("CON_ERR", true);
+                break;
+            }
+
+            interface.setLed(LED_G, 1);
+            interface.setLed(LED_R, 0);
+            User *user = new User(*db, rfid.readTag());
+            interface.bipFeedback();
+
+            Ticket tic(*user);
+
+            if (tim >= tic) {
+                lcd.print("Invalid!", true);
+                interface.errorFeedback();
+            } else {
+                lcd.print("Thanks!", true);
+                interface.setLed(LED_G, 0);
+                sleep(0.5);
+                interface.setLed(LED_G, 1);
+                interface.bipFeedback();
+                sleep(5);
+            }
+            delete user, tic, tim, db;
+
+        } else {
+
+            /*! Payment*/
+            interface.setLed(LED_R, 1);
+            lcd.print("Payment", true);
+            sleep(1);
+
+            string UID = rfid.readTag();
+
+            srand(time(nullptr));
+            int userRandId = rand() % 4 + 1;
+
+            Database *db = new Database(host, userName, pw);
+            if(db->testConnection()) {
+                lcd.print("CON_ERR", true);
+                break;
+            }
+
+            User *buyer = new User(*db, UID);
+            User *seller = new User(*db, userRandId);
+
+            Bank *buyerBank = new Bank(*buyer);
+            Shop *shop = new Shop(*seller);
+
+            int itemRand = rand() % shop->getItems().size() + 1;
+
+            string result = buyerBank->payment(shop->getItems().at(itemRand), *seller);
+
+            if (result == "SUCCES!") {
+                lcd.print(result, true);
+                interface.bipFeedback();
+            } else {
+                lcd.print("ERROR!", true);
+                lcd.print("TRY AGAIN", false, 0, 1);
+                interface.errorFeedback();
+            }
+            delete buyer, buyerBank, seller, shop, db;
+
+        }
     }
-    /* this is the ticket validation scenario */
-    else{
-
-        User *user = new User();
-        Bank *bank = new Bank(*user);
-        //
-//
-        //get a shop and an item randomly from the list of the available shops and ask for payment
-        //then when a RFiD tag is near check if the money are enough to continue.
-        //subsequently move the money amount (item.price) from the buyer to the seller, that's it, easy ?
-
-
-    }
-    return EXIT_SUCCESS;
 }
+
 

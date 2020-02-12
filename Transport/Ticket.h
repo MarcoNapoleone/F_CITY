@@ -1,17 +1,19 @@
 #ifndef F_CITY_TICKET_H
 #define F_CITY_TICKET_H
 
-#include "Database.h"
-#include "User.h"
+#include "../auxiliary-lib/Database.h"
+#include "../User.h"
 
 using namespace std;
 
 class Ticket {
 private:
 
+    Database db;
+    User user;
     time_t ticketExpDate;
     string companyName;
-    User user;
+
     int companyId;
     //string travelerName;
     //string travelerSurname;
@@ -22,7 +24,7 @@ public:
     Ticket(User &user);
 
     /* fetcher from db to ticket class, passing db as reference */
-    void getTicketInfo(Database &db, const int id);
+    void fetchTicketInfo();
 
     /* setter and getter */
     void setTicketExpDate(time_t ticketExpDate);
