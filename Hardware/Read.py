@@ -62,7 +62,7 @@ while continue_reading:
 
         # Print UID
         f = open('output.txt','w')
-        f.write("%s:%s:%s:%s" % (uid[0], uid[1], uid[2], uid[3]))
+        f.write("%s:%s:%s:%s" % (static_cast<unsigned_char>(uid[0] & 0xff), static_cast<unsigned_char>(uid[1] & 0xff), static_cast<unsigned_char>(uid[2] & 0xff), static_cast<unsigned_char>(uid[3] & 0xff)))
         f.close()
         break
         
