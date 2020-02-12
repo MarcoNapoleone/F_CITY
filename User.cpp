@@ -61,8 +61,8 @@ void User::fetchUserInfo(string UID) {
             sql::ResultSet *res;
             sql::PreparedStatement *pstmt; //using prepared statement
 
-            pstmt = db.con->prepareStatement("SELECT * FROM users WHERE rfid = ?"); //sql injection
-            pstmt->setString(1, UID); //replace '?' with [int]id
+            pstmt = db.con->prepareStatement("SELECT * FROM users WHERE UID = ?"); //sql injection
+            pstmt->setString(1, UID); //replace '?'
             res = pstmt->executeQuery();
 
             while (res->next()) {

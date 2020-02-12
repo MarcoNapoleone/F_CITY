@@ -118,7 +118,7 @@ string Bank::payment(Item item, User &toUser) {
                 Bank sellerBank(toUser);
                 sellerBank.updateBalanceInfo(sellerBank.getMoneyBalance() + item.getPrice());
                 this->recordTransaction("Payment", toUser, item.getPrice());
-                return ("SUCCES");
+                return ("SUCCESS!");
             }
             else
                 throw "Insufficent balance";

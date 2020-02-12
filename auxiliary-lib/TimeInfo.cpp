@@ -11,7 +11,8 @@ bool TimeInfo::operator>=(Ticket tic) {
 
 
 string TimeInfo::timeDate() {
-    string timeDate = to_string(timePtr->tm_mday) + "-" + to_string(timePtr->tm_mon + 1) + "-" + to_string(timePtr->tm_year + 1900);
+    string timeDate = to_string(timePtr->tm_mday) + "-" + to_string(timePtr->tm_mon + 1) + "-" +
+                      to_string(timePtr->tm_year - 100);
     return (timeDate);
 }
 

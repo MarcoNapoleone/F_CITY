@@ -20,7 +20,7 @@ int main() {
 
     Hardware interface;
     Lcd lcd;
-    Rc522 rfid;
+    Rc522 nfcReader;
 
     while (true) {
 
@@ -35,27 +35,31 @@ int main() {
             interface.setLed(LED_R, 1);
             lcd.print("Ticket", true);
             lcd.print("stamp: ", false, 0, 1);
-            delay (1000);
+            delay (1500);
+            interface.setLed(LED_R, 0);
+            interface.bipFeedback();
 
-            TimeInfo tim;
+            TimeInfo now;
 
-            lcd.print(tim.timeDate(), true);
-            lcd.print("Stamp", false, 0, 1);
+            lcd.print(now.timeDate(), true);
+            lcd.print("Stamp ->", false, 0, 1);
 
             Database *db = new Database(host, userName, pw);
-            if(db->testConnection()) {
+
+            if(!db->testConnection()) {
                 lcd.print("CON_ERR", true);
                 break;
             }
 
             interface.setLed(LED_G, 1);
             interface.setLed(LED_R, 0);
-            User *user = new User(*db, rfid.readTag());
+            User *traveler = new User(*db, nfcReader.readTag());
             interface.bipFeedback();
 
-            Ticket tic(*user);
+            Ticket ticket(*traveler);
+            cout<<mktime(now.getTimePtr())<<" "<<ticket.getTicketExpDate();
 
-            if (tim >= tic) {
+            if (now >= ticket) {
                 lcd.print("Invalid!", true);
                 interface.errorFeedback();
             } else {
@@ -66,37 +70,49 @@ int main() {
                 interface.bipFeedback();
                 delay (5000);
             }
-            delete user, tic, tim, db;
+            delete traveler, ticket, now, db;
 
         } else {
 
             /*! Payment*/
             interface.setLed(LED_R, 1);
             lcd.print("Payment", true);
-            delay (1000);
+            delay (1500);
+            interface.setLed(LED_R, 0);
+            interface.bipFeedback();
 
-            string UID = rfid.readTag();
 
             srand(time(nullptr));
             int userRandId = rand() % 4 + 1;
 
             Database *db = new Database(host, userName, pw);
-            if(db->testConnection()) {
+
+            if(!db->testConnection()) {
                 lcd.print("CON_ERR", true);
                 break;
             }
 
-            User *buyer = new User(*db, UID);
-            User *seller = new User(*db, userRandId);
 
-            Bank *buyerBank = new Bank(*buyer);
+            User *seller = new User(*db, userRandId);
             Shop *shop = new Shop(*seller);
 
             int itemRand = rand() % shop->getItems().size() + 1;
+            auto item = shop->getItems().at(itemRand);
 
-            string result = buyerBank->payment(shop->getItems().at(itemRand), *seller);
 
-            if (result == "SUCCES!") {
+            lcd.print(item.getName(), true);
+            lcd.print(item.getPrice(), false, 0, 1);
+
+            interface.setLed(LED_G, 1);
+            string UID = nfcReader.readTag();
+            cout<<UID;
+
+            User *buyer = new User(*db, UID);
+            Bank *buyerBank = new Bank(*buyer);
+
+            string result = buyerBank->payment(item, *seller);
+
+            if (result == "SUCCESS!") {
                 lcd.print(result, true);
                 interface.bipFeedback();
             } else {
