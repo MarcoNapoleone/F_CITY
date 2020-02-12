@@ -6,10 +6,8 @@
 #define F_CITY_ITEM_H
 
 #include "../auxiliary-lib/Database.h"
-#include "Shop.h"
 
-
-class Item{
+class Item {
 
     string name;
     float price;

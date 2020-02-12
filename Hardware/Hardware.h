@@ -5,14 +5,12 @@
 #ifndef F_CITY_HARDWARE_H
 #define F_CITY_HARDWARE_H
 
-//#include <wiringPi.h>
-#include "wiringPi.h"
-#include "Lcd.h"
+#include <wiringPi.h>
+#include <lcd.h>
 
 using namespace std;
 
 class Hardware {
-
 
 #define LCD_RS 25 //Register select pin
 #define LCD_E 24 //Enable Pin

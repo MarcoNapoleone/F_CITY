@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 #include "Item.h"
-
 #include "../User.h"
 
 
@@ -23,7 +22,7 @@ private:
     User user;
     string shopName;
     int shopId;
-    vector<Item*> items;
+    vector<Item> items;
 
 public:
 
@@ -31,7 +30,7 @@ public:
     void fetchShopInfo();
     void setShopName(const string &shopName);
     void fetchItems();
-    const vector<Item*> &getItems() const;
+    const vector<Item> &getItems() const;
 
 };
 

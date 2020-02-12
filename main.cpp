@@ -1,10 +1,12 @@
 #include <iostream>
+#include <cstdlib>
+
 #include "User.h"
 #include "Transport/Ticket.h"
 #include "auxiliary-lib/TimeInfo.h"
 #include "Payment/Bank.h"
 #include "Payment/Shop.h"
-#include <stdlib.h>
+
 #include "Hardware/Lcd.h"
 #include "Hardware/Rc522.h"
 #include "Hardware/Hardware.h"
@@ -33,7 +35,7 @@ int main() {
             interface.setLed(LED_R, 1);
             lcd.print("Ticket", true);
             lcd.print("stamp: ", false, 0, 1);
-            sleep(1);
+            delay (1000);
 
             TimeInfo tim;
 
@@ -59,10 +61,10 @@ int main() {
             } else {
                 lcd.print("Thanks!", true);
                 interface.setLed(LED_G, 0);
-                sleep(0.5);
+                delay (500);
                 interface.setLed(LED_G, 1);
                 interface.bipFeedback();
-                sleep(5);
+                delay (5000);
             }
             delete user, tic, tim, db;
 
@@ -71,7 +73,7 @@ int main() {
             /*! Payment*/
             interface.setLed(LED_R, 1);
             lcd.print("Payment", true);
-            sleep(1);
+            delay (1000);
 
             string UID = rfid.readTag();
 

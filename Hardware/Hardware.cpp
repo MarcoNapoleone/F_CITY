@@ -2,6 +2,7 @@
 // Created by makon on 09/02/2020.
 //
 
+#include <unistd.h>
 #include "Hardware.h"
 
 
@@ -23,49 +24,51 @@ int Hardware::buttonChoice() {
 
     while (true) {
 
-        if (digitalRead(BUTTON_R, HIGH))
+        if (digitalRead(BUTTON_R))
             return (choice = 0);
-        if (digitalRead(BUTTON_Y, HIGH))
+        if (digitalRead(BUTTON_Y))
             return (choice = 1);
     }
 }
 
-void Hardware::setLed(int led, bool state){
-    if(state)
+void Hardware::setLed(int led, bool state) {
+    if (state)
         digitalWrite(led, HIGH);
     else
-        diglitalWrite(led, LOW);
+        digitalWrite(led, LOW);
     return;
 }
-void Hardware::errorFeedback(){
+
+void Hardware::errorFeedback() {
 
     digitalWrite(LED_G, LOW);
 
     digitalWrite(LED_R, HIGH);
     digitalWrite(BUZ, HIGH);
-    sleep(0.2);
+    delay(200);
     digitalWrite(LED_R, LOW);
     digitalWrite(BUZ, LOW);
-    sleep(0.2);
+    delay(200);
 
     digitalWrite(LED_R, HIGH);
     digitalWrite(BUZ, HIGH);
-    sleep(0.2);
+    delay(200);
     digitalWrite(LED_R, LOW);
     digitalWrite(BUZ, LOW);
-    sleep(0.2);
+    delay(200);
 
     digitalWrite(LED_R, HIGH);
     digitalWrite(BUZ, HIGH);
-    sleep(0.2);
+    delay(200);
     digitalWrite(LED_R, LOW);
     digitalWrite(BUZ, LOW);
-    sleep(0.2);
+    delay(200);
 }
-void Hardware::bipFeedback(){
+
+void Hardware::bipFeedback() {
 
     digitalWrite(BUZ, HIGH);
-    sleep(0.2);
+    delay(200);
     digitalWrite(BUZ, LOW);
-    sleep(0.2);
+    delay(200);
 }

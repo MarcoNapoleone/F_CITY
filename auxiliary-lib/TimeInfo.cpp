@@ -10,13 +10,13 @@ bool TimeInfo::operator>=(Ticket tic) {
 };
 
 
-string TimeInfo::TameDate() {
-    string timeDate = timePtr->tm_mday + '-' + (timePtr->tm_mon + 1) + '-' + (timePtr->tm_year + 1900);
+string TimeInfo::timeDate() {
+    string timeDate = to_string(timePtr->tm_mday) + "-" + to_string(timePtr->tm_mon + 1) + "-" + to_string(timePtr->tm_year + 1900);
     return (timeDate);
 }
 
 string TimeInfo::timeHour() {
-    string timeHour = timePtr->tm_hour + ':' + timePtr->tm_min;
+    string timeHour = to_string(timePtr->tm_hour) + "-" + to_string(timePtr->tm_min);
     return (timeHour);
 }
 
