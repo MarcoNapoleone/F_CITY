@@ -1,10 +1,17 @@
 #include "Ticket.h"
-#include "TimeInfo.h"
+#include "../auxiliary-lib/TimeInfo.h"
 
-void Ticket::getTicketInfo(Database &db, const int id) {
+
+Ticket::Ticket(User &user){
+    this->user = user;
+    this->db = user.getDb();
+    this->fetchTicketInfo();
+}
+
+void Ticket::fetchTicketInfo() {
 
     /* checking connection */
-    if (db.test_connection()) {
+    if (db.testConnection()) {
 
         try {
 
@@ -12,7 +19,7 @@ void Ticket::getTicketInfo(Database &db, const int id) {
             sql::PreparedStatement *pstmt; //using prepared statement
 
             pstmt = db.con->prepareStatement("SELECT * FROM bus_transport WHERE id = ?"); //sql injection
-            pstmt->setInt(1, id); //replace '?' with [int]id
+            pstmt->setInt(1, this->user.getId()); //replace '?' with [int]id
             res = pstmt->executeQuery();
 
             while (res->next()) {
@@ -39,9 +46,6 @@ void Ticket::getTicketInfo(Database &db, const int id) {
     } else cout << "connection error!";
 }
 
-Ticket::Ticket(User &user){
-    this->user = user;
-}
 
 void Ticket::setTicketExpDate(time_t ticketExpDate) {
     Ticket::ticketExpDate = ticketExpDate;
