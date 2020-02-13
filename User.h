@@ -12,7 +12,7 @@ private:
     string name;
     string surname;
 
-    int rfid;
+    string UID;
     int id;
     time_t birth_date;
     bool gender; //0 -> female; 1 -> male
@@ -49,13 +49,15 @@ public:
 
     const string &getSurname() const;
 
-    int getRfid() const;
+    string getUID() const;
 
     time_t getBirthDate() const;
 
     bool getGender() const;
 
     void setGender(bool gender);
+
+    void setUid(const string &uid);
 
 };
 

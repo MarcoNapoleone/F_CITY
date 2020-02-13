@@ -18,7 +18,7 @@ void Ticket::fetchTicketInfo() {
             sql::ResultSet *res;
             sql::PreparedStatement *pstmt; //using prepared statement
 
-            pstmt = db.con->prepareStatement("SELECT * FROM tickets WHERE id = ?"); //sql injection
+            pstmt = db.con->prepareStatement("SELECT * FROM tickets WHERE user_id = ?"); //sql injection
             pstmt->setInt(1, this->user.getId()); //replace '?' with [int]id
             res = pstmt->executeQuery();
 

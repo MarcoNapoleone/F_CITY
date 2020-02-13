@@ -30,6 +30,7 @@ void User::fetchUserInfo(const int id) {
                 this->setName(res->getString("name"));
                 this->setSurname(res->getString("surname"));
                 this->setGender(res->getBoolean("gender"));
+                this->setUid(res->getString("UID"));
 
                 /* turn time from string format (yyyy-mm-dd hh:mm:ss) into unix local timestamp format */
                 this->setBirthDate(strToTime((string) res->getString("birthday")));
@@ -70,6 +71,7 @@ void User::fetchUserInfo(string UID) {
                 this->setName(res->getString("name"));
                 this->setSurname(res->getString("surname"));
                 this->setGender(res->getBoolean("gender"));
+                this->setId(res->getInt("id"));
 
                 /* turn time from string format (yyyy-mm-dd hh:mm:ss) into unix local timestamp format */
                 this->setBirthDate(strToTime((string) res->getString("birthday")));
@@ -111,12 +113,16 @@ const string &User::getName() const {
     return name;
 }
 
+void User::setUid(const string &uid) {
+    UID = uid;
+}
+
 const string &User::getSurname() const {
     return surname;
 }
 
-int User::getRfid() const {
-    return rfid;
+string User::getUID() const {
+    return UID;
 }
 
 time_t User::getBirthDate() const {

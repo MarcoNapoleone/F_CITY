@@ -59,8 +59,8 @@ int main() {
             Ticket ticket(*traveler);
             cout<<mktime(now.getTimePtr())<<" "<<ticket.getTicketExpDate();
 
-            cout<<strToTime("2021-01-11 00:00:00");
-            cout.flush();
+            //cout<<strToTime("2021-01-11 00:00:00");
+            //cout.flush();
 
             if (now >= ticket) {
                 lcd.print("Invalid!", true);

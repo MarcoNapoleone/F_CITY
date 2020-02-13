@@ -23,7 +23,7 @@ void Bank::fetchBalanceInfo() {
             sql::ResultSet *res;
             sql::PreparedStatement *pstmt; //using prepared statement
 
-            pstmt = db.con->prepareStatement("SELECT money_balance, bank_code FROM wallets WHERE id = ?"); //sql injection
+            pstmt = db.con->prepareStatement("SELECT money_balance, bank_code FROM wallets WHERE user_id = ?"); //sql injection
             pstmt->setInt(1, user.getId());
             res = pstmt->executeQuery();
 

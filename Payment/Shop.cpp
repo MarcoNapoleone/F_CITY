@@ -95,6 +95,6 @@ const vector<Item> &Shop::getItems() const {
 
 Shop::~Shop() {
 
-    delete(items);
+    delete(&items);
 
 }
