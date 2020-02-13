@@ -9,7 +9,7 @@
 string Rc522::readTag() {
 
     string UID;
-    const char command[] = "python /home/pi/Desktop/test/Read.py";
+    const char command[] = "python /home/pi/Desktop/F_CITY/Hardware/Read.py";
     std::system(command);
     ifstream file;
     file.open("output.txt");

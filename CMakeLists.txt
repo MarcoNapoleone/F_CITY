@@ -20,6 +20,9 @@ add_executable(F_CITY main.cpp
 
 include_directories(/usr/local/include/mysql-connector-cpp/include) #using cpp compiler so the path is for mysql connector in the WSL
 target_link_libraries(F_CITY mysqlcppconn)
+target_link_libraries(F_CITY stdc++)
+target_link_libraries(F_CITY wiringPiDev)
+target_link_libraries(F_CITY  wiringPi)
 #-std=c++11
 
 

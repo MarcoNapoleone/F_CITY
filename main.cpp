@@ -101,7 +101,7 @@ int main() {
 
 
             lcd.print(item.getName(), true);
-            lcd.print(item.getPrice(), false, 0, 1);
+            lcd.print(std::to_string(item.getPrice()), false, 0, 1);
 
             interface.setLed(LED_G, 1);
             string UID = nfcReader.readTag();
