@@ -62,23 +62,17 @@ while continue_reading:
 
         # Print UID
         f = open('output.txt','w')
-        f.write("%s:%s:%s:%s" % (static_cast<unsigned_char>(uid[0] & 0xff), static_cast<unsigned_char>(uid[1] & 0xff), static_cast<unsigned_char>(uid[2] & 0xff), static_cast<unsigned_char>(uid[3] & 0xff)))
+        f.write(hex(uid[0])[2:].upper())
+        f.write(':')
+        f.write(hex(uid[1])[2:].upper())
+        f.write(':')
+        f.write(hex(uid[2])[2:].upper())
+        f.write(':')
+        f.write(hex(uid[3])[2:].upper())
+        f.write(':')
+        f.write(hex(uid[4])[2:].upper())
         f.close()
+        end_read(None,None)
         break
-        
-        # This is the default key for authentication
-        key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
-        
-        # Select the scanned tag
-        MIFAREReader.MFRC522_SelectTag(uid)
 
-        # Authenticate
-        status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
-
-        # Check if authenticated
-        if status == MIFAREReader.MI_OK:
-            MIFAREReader.MFRC522_Read(8)
-            MIFAREReader.MFRC522_StopCrypto1()
-        else:
-            print "Authentication error"
 
