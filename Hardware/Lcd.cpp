@@ -20,7 +20,7 @@ void Lcd::print(string text, bool clear) {
     return;
 }
 
-void Lcd::print(string, bool clear, int col, int row) {
+void Lcd::print(string text, bool clear, int col, int row) {
 
     if (clear) lcdClear(lcd);
     lcdPosition(lcd, col, row);
