@@ -18,7 +18,6 @@ class Shop {
 private:
 
     Database db;
-    Item item;
     User user;
     string shopName;
     int shopId;
@@ -27,6 +26,9 @@ private:
 public:
 
     Shop(User &user);
+
+    virtual ~Shop();
+
     void fetchShopInfo();
     void setShopName(const string &shopName);
     void fetchItems();

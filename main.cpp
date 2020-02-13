@@ -59,6 +59,9 @@ int main() {
             Ticket ticket(*traveler);
             cout<<mktime(now.getTimePtr())<<" "<<ticket.getTicketExpDate();
 
+            cout<<strToTime("2021-01-11 00:00:00");
+            cout.flush();
+
             if (now >= ticket) {
                 lcd.print("Invalid!", true);
                 interface.errorFeedback();
@@ -70,7 +73,7 @@ int main() {
                 interface.bipFeedback();
                 delay (5000);
             }
-            delete traveler, ticket, now, db;
+            delete traveler, db;
 
         } else {
 
@@ -81,8 +84,7 @@ int main() {
             interface.setLed(LED_R, 0);
             interface.bipFeedback();
 
-
-            srand(time(nullptr));
+            srand(time(NULL));
             int userRandId = rand() % 4 + 1;
 
             Database *db = new Database(host, userName, pw);
@@ -92,13 +94,14 @@ int main() {
                 break;
             }
 
-
             User *seller = new User(*db, userRandId);
             Shop *shop = new Shop(*seller);
 
             int itemRand = rand() % shop->getItems().size() + 1;
-            auto item = shop->getItems().at(itemRand);
+            cout<<"1";
+            cout.flush();
 
+            auto item = shop->getItems().at(itemRand);
 
             lcd.print(item.getName(), true);
             lcd.print(std::to_string(item.getPrice()), false, 0, 1);

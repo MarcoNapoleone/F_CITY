@@ -92,3 +92,9 @@ void Shop::fetchItems(){
 const vector<Item> &Shop::getItems() const {
     return items;
 }
+
+Shop::~Shop() {
+
+    delete(items);
+
+}

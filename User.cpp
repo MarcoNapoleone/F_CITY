@@ -138,3 +138,8 @@ void User::setId(int id) {
 const Database &User::getDb() const {
     return db;
 }
+
+User::~User() {
+
+
+}

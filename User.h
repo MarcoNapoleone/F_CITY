@@ -29,6 +29,9 @@ public:
 
     User() = default;
 
+    virtual ~User();
+
+
     /* getter and setter */
     void setName(const string &name);
 
