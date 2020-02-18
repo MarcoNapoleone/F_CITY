@@ -1,5 +1,7 @@
 # F_CITY
-## this is a project from the IT students of Cassino university.
+### this is a project from the IT students of Cassino university.
+official page [F_CITY project](https://sites.google.com/studentmail.unicas.it/fcity-project/the-project/requirements?authuser=0)
+
 Our project is about a new model for a not so far future city.
 This model associates to each citizen a unique Id that is used, for instances, to be identified or establish payments.
 Our aim is to simplify and improve daily actions as to identify themselves in public structures (e.g. airports).
