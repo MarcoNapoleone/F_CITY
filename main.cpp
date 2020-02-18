@@ -93,10 +93,10 @@ int main() {
             } else {
                 lcd.print("Thanks!", true);
                 interface.setLed(LED_G, 0);
-                delay (500);
+                delay(500);
                 interface.setLed(LED_G, 1);
                 interface.bipFeedback();
-                delay (2000);
+                delay(2000);
             }
             delete db, traveler;
 
@@ -105,7 +105,7 @@ int main() {
             /** Payment */
             interface.setLed(LED_R, 1);
             lcd.print("Payment", true);
-            delay (1500);
+            delay(1500);
             interface.setLed(LED_R, 0);
             interface.bipFeedback();
 

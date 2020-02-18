@@ -14,21 +14,25 @@ private:
     Database db;
     float moneyBalance;
     string bankCode;
-public:
-    float getMoneyBalance() const;
-
-private:
 
     void fetchBalanceInfo();
+
     void updateBalanceInfo(float newBalance);
+
     void recordTransaction(string type, User toUser, float moneyAmmount);
 
 public:
 
     Bank(User &user);
+
     string payment(Item item, User &toUser);
+
     void setMoneyBalance(float moneyBalance);
+
+    float getMoneyBalance() const;
+
     const string &getBankCode() const;
+
     void setBankCode(const string &bankCode);
 };
 

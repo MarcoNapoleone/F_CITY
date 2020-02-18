@@ -1,13 +1,13 @@
 #include "User.h"
 #include "auxiliary-lib/TimeInfo.h"
 
-User::User(Database &db, int id){
+User::User(Database &db, int id) {
     this->db = db;
     this->fetchUserInfo(id);
     this->setId(id);
 }
 
-User::User(Database &db, string UID){
+User::User(Database &db, string UID) {
     this->db = db;
     this->fetchUserInfo(UID);
     this->setUid(UID);

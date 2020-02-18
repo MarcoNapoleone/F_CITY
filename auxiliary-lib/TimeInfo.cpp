@@ -11,7 +11,7 @@ bool TimeInfo::operator>=(Ticket &ticketExpDate) {
 
 
 string TimeInfo::timeDate() {
-    string timeDate = to_string(timePtr->tm_year -100) + "-" + to_string(timePtr->tm_mon + 1) + "-" +
+    string timeDate = to_string(timePtr->tm_year - 100) + "-" + to_string(timePtr->tm_mon + 1) + "-" +
                       to_string(timePtr->tm_mday);
     return (timeDate);
 }
@@ -25,7 +25,7 @@ tm *TimeInfo::getTimePtr() const {
     return timePtr;
 }
 
-TimeInfo::TimeInfo(){
+TimeInfo::TimeInfo() {
     t = time(NULL);
     timePtr = localtime(&t);
 }

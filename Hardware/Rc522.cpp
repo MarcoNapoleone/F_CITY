@@ -20,5 +20,5 @@ string Rc522::readTag() {
         }
     }
     file.close();
-    return(UID);
+    return (UID);
 }

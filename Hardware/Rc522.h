@@ -15,6 +15,7 @@ class Rc522 : public Hardware {
 
 public:
     Rc522() = default;
+
     std::string readTag();
 };
 

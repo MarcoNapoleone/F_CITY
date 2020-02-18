@@ -19,9 +19,9 @@ class Database {
 private:
 
     /* database credentials declared as members */
-     string host;
-     string userName;
-     string pw;
+    string host;
+    string userName;
+    string pw;
 
 public:
 
@@ -34,6 +34,7 @@ public:
 
     /* constructor */
     Database(const string &host, const string &userName, const string &pw);
+
     Database() = default;
 
     /* boolean method for initialization of sql var and testing if connection works */

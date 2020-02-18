@@ -19,6 +19,7 @@ public:
 
     /* to print time in human friendly format */
     string timeDate();
+
     string timeHour();
 
     /* getter */
@@ -27,7 +28,7 @@ public:
     TimeInfo();
 
     /* defining a no std operator to compare current time and ticket expiring date */
-    bool operator >= (Ticket &ticketExpDate);
+    bool operator>=(Ticket &ticketExpDate);
 
 };
 

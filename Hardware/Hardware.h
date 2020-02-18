@@ -26,9 +26,13 @@ class Hardware {
 
 public:
     Hardware();
+
     int buttonChoice();
+
     void setLed(int led, bool state);
+
     void errorFeedback();
+
     void bipFeedback();
 };
 

@@ -16,8 +16,9 @@ private:
     time_t birth_date;
     bool gender; //0 -> female; 1 -> male
 
-    /* fetcher from db to ticket class, passing db as reference */
+    /* fetcher from db to ticket class */
     void fetchUserInfo(const int id);
+
     void fetchUserInfo(string UID);
 
 public:

@@ -15,7 +15,9 @@ class Lcd : public Hardware {
     int lcd;
 public:
     void setup();
+
     void print(string text, bool clear);
+
     void print(string, bool clear, int col, int row);
 
     Lcd();

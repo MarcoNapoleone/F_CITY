@@ -17,5 +17,5 @@ float Item::getPrice() const {
 }
 
 void Item::setPrice(float price) {
-  this->price = price;
+    this->price = price;
 }

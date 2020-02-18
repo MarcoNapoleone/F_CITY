@@ -23,7 +23,8 @@ void Bank::fetchBalanceInfo() {
             sql::ResultSet *res;
             sql::PreparedStatement *pstmt; //using prepared statement
 
-            pstmt = db.con->prepareStatement("SELECT money_balance, bank_code FROM wallets WHERE user_id = ?"); //sql injection
+            pstmt = db.con->prepareStatement(
+                    "SELECT money_balance, bank_code FROM wallets WHERE user_id = ?"); //sql injection
             pstmt->setInt(1, user.getId());
             res = pstmt->executeQuery();
 
@@ -55,7 +56,8 @@ void Bank::updateBalanceInfo(float newBalance) {
 
             sql::PreparedStatement *pstmt; //using prepared statement
 
-            pstmt = this->db.con->prepareStatement("UPDATE wallets SET money_balance = ? WHERE user_id = ?"); //sql injection
+            pstmt = this->db.con->prepareStatement(
+                    "UPDATE wallets SET money_balance = ? WHERE user_id = ?"); //sql injection
             pstmt->setDouble(1, newBalance);
             pstmt->setInt(2, this->user.getId());
             pstmt->executeUpdate();
@@ -74,7 +76,7 @@ void Bank::updateBalanceInfo(float newBalance) {
 
 }
 
-void Bank::recordTransaction(string type, User toUser, float moneyAmount){
+void Bank::recordTransaction(string type, User toUser, float moneyAmount) {
 
     if (this->db.testConnection()) {
 
@@ -89,7 +91,7 @@ void Bank::recordTransaction(string type, User toUser, float moneyAmount){
             pstmt->setDouble(4, moneyAmount);
 
             TimeInfo time;
-            pstmt->setString(5,time.timeDate() + " " + time.timeHour());
+            pstmt->setString(5, time.timeDate() + " " + time.timeHour());
             pstmt->executeUpdate();
 
             delete pstmt;
@@ -118,14 +120,13 @@ string Bank::payment(Item item, User &toUser) {
                 sellerBank.updateBalanceInfo(sellerBank.getMoneyBalance() + item.getPrice());
                 this->recordTransaction("Payment", toUser, item.getPrice());
                 return ("SUCCESS!");
-            }
-            else
+            } else
                 throw "Insufficient balance";
         } else
             throw "Connection error";
     }
     catch (char const *error) {                                    //using char array because strings are not allowed
-       return(error);
+        return (error);
     }
 }
 

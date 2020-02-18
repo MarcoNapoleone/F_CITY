@@ -5,7 +5,7 @@
 #include "Shop.h"
 #include <time.h>
 
-Shop::Shop(User &user){
+Shop::Shop(User &user) {
 
     this->shopId = user.getId();
     this->user = user;
@@ -14,7 +14,7 @@ Shop::Shop(User &user){
     this->fetchItems();
 }
 
-void Shop::fetchShopInfo(){
+void Shop::fetchShopInfo() {
 
     /* checking connection */
     if (db.testConnection()) {
@@ -52,7 +52,7 @@ void Shop::setShopName(const string &shopName) {
     Shop::shopName = shopName;
 }
 
-void Shop::fetchItems(){
+void Shop::fetchItems() {
 
     /* checking connection */
     if (db.testConnection()) {
@@ -86,7 +86,6 @@ void Shop::fetchItems(){
     } else cout << "connection error!";
 
 
-
 }
 
 const vector<Item> &Shop::getItems() const {
@@ -95,7 +94,7 @@ const vector<Item> &Shop::getItems() const {
 
 Shop::~Shop() {
 
-    delete(&items);
+    delete (&items);
 
 }
 
