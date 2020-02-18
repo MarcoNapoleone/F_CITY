@@ -81,10 +81,10 @@ int main() {
 
             /**
              *\if actual time is bigger than the ticket expiring date
-             *  ticket is valid.
+             *  ticket rejected.
              *\endif
              *\ifnot
-             *  ticket rejected.
+             *  ticket is valid.
              *\endif
              */
             if (now >= ticket) {
