@@ -23,7 +23,7 @@ target_link_libraries(F_CITY mysqlcppconn)
 target_link_libraries(F_CITY stdc++)
 target_link_libraries(F_CITY wiringPiDev)
 target_link_libraries(F_CITY  wiringPi)
-#-std=c++11
+
 
 
 

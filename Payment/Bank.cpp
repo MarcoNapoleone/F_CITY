@@ -89,8 +89,7 @@ void Bank::recordTransaction(string type, User toUser, float moneyAmount){
             pstmt->setDouble(4, moneyAmount);
 
             TimeInfo time;
-            pstmt->setString(5,"2021-01-11 00:00:00");
-            //time.getTimePtr()->tm_year + "-" + time.getTimePtr()->tm_mon + "-" + time.getTimePtr()->tm_mday + " " + time.getTimePtr()->tm_hour + ":" + time.getTimePtr()->tm_min + ":" + time.getTimePtr()->tm_sec);
+            pstmt->setString(5,time.timeDate() + " " + time.timeHour());
             pstmt->executeUpdate();
 
             delete pstmt;
@@ -121,7 +120,7 @@ string Bank::payment(Item item, User &toUser) {
                 return ("SUCCESS!");
             }
             else
-                throw "Insufficent balance";
+                throw "Insufficient balance";
         } else
             throw "Connection error";
     }

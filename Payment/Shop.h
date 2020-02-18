@@ -28,12 +28,12 @@ public:
     Shop(User &user);
 
     virtual ~Shop();
-
     void fetchShopInfo();
     void setShopName(const string &shopName);
     void fetchItems();
     const vector<Item> &getItems() const;
 
+    const string &getShopName() const;
 };
 
 

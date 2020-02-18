@@ -19,13 +19,13 @@ class Database {
 private:
 
     /* database credentials declared as members */
-    string host;
-    string userName;
-    string pw;
+     string host;
+     string userName;
+     string pw;
 
 public:
 
-    //! sql var */
+    /** sql var */
     sql::Driver *driver;
     sql::Connection *con;
 

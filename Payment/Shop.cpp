@@ -7,11 +7,11 @@
 
 Shop::Shop(User &user){
 
+    this->shopId = user.getId();
     this->user = user;
     this->db = user.getDb();
     this->fetchShopInfo();
     this->fetchItems();
-    this->shopId = user.getId();
 }
 
 void Shop::fetchShopInfo(){
@@ -97,4 +97,8 @@ Shop::~Shop() {
 
     delete(&items);
 
+}
+
+const string &Shop::getShopName() const {
+    return shopName;
 }

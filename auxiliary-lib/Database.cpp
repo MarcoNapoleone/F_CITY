@@ -8,20 +8,21 @@ Database::Database(const string &host, const string &userName, const string &pw)
     Database::host = host;
     Database::userName = userName;
     Database::pw = pw;
+
+    driver = get_driver_instance();
+    con = driver->connect(Database::host, Database::userName, Database::pw);
+    con->setSchema(Database::userName);
+
 }
 
 bool Database::testConnection() {
 
-    bool test = 0;
+    bool test;
     try {
 
         sql::Statement *stmt;
         sql::ResultSet *res;
 
-        /* checking if connection is successful */
-        driver = get_driver_instance();
-        con = driver->connect(Database::host, Database::userName, Database::pw);
-        con->setSchema(Database::userName);
         stmt = con->createStatement();
         res = stmt->executeQuery("SELECT '1' AS _message"); //return 1 in any case
         res->next();
@@ -29,7 +30,6 @@ bool Database::testConnection() {
 
         delete stmt;
         delete res;
-
 
     } catch (sql::SQLException &e) {
         cout << "# ERR: SQLException in " << __FILE__;
@@ -42,7 +42,7 @@ bool Database::testConnection() {
 }
 
 Database::~Database() {
-    delete con;
+
 }
 
 

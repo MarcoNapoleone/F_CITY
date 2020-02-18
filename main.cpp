@@ -1,6 +1,18 @@
-#include <iostream>
-#include <cstdlib>
 
+/*!
+ *  \brief     Simulation of two F_CITY scenarios, payment and ticket stamp.
+ *  \details   https://sites.google.com/studentmail.unicas.it/fcity-project/home
+ *  \author    Marco Napoleone
+ *  \author    Alessandro Ricci
+ *  \author    Roman Capraro
+ *  \version   1.3
+ *  \date      2019-2020
+ *  \pre       get mySQL lib for your system
+ *  \bug       unknown.
+ *  \copyright GNU Public License.
+ */
+
+#include <iostream>
 #include "User.h"
 #include "Transport/Ticket.h"
 #include "auxiliary-lib/TimeInfo.h"
@@ -11,10 +23,13 @@
 #include "Hardware/Rc522.h"
 #include "Hardware/Hardware.h"
 
+/** \note Ignoring noreturn */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
+
 #define host "tcp://remotemysql.com:3306"
 #define userName "bvYXzisyGu"
 #define pw "DfBbNrL9ER"
-
 
 int main() {
 
@@ -22,46 +37,56 @@ int main() {
     Lcd lcd;
     Rc522 nfcReader;
 
+    /** \note infinite loop*/
     while (true) {
 
-        /*! Choose which scenario to be executed: 0 -> PAYMENT, 1 -> VALIDATE BUS TICKET" */
+        Database *db = new Database(host, userName, pw);
+
+        /**
+         * Choose which scenario to be executed:
+         * 0 -> PAYMENT,
+         * 1 -> VALIDATE BUS TICKET"
+         */
         lcd.print("Choose: ", true);
         int choice = interface.buttonChoice();
 
-        /* Simulating 2 different scenarios */
+        /** Simulating 2 different scenarios */
         if (choice) {
 
-            /*! ticket validation */
+            /** ticket validation */
             interface.setLed(LED_R, 1);
             lcd.print("Ticket", true);
             lcd.print("stamp: ", false, 0, 1);
-            delay (1500);
+            delay(1500);
             interface.setLed(LED_R, 0);
             interface.bipFeedback();
 
-            TimeInfo now;
-
-            lcd.print(now.timeDate(), true);
-            lcd.print("Stamp ->", false, 0, 1);
-
-            Database *db = new Database(host, userName, pw);
-
-            if(!db->testConnection()) {
+            /** checking connection */
+            if (!db->testConnection()) {
                 lcd.print("CON_ERR", true);
                 break;
             }
 
+            TimeInfo now;
+            lcd.print(now.timeDate(), true);
+            lcd.print("Stamp ->", false, 0, 1);
             interface.setLed(LED_G, 1);
             interface.setLed(LED_R, 0);
+
+            /** system listening for tag */
             User *traveler = new User(*db, nfcReader.readTag());
             interface.bipFeedback();
 
             Ticket ticket(*traveler);
-            cout<<mktime(now.getTimePtr())<<" "<<ticket.getTicketExpDate();
 
-            //cout<<strToTime("2021-01-11 00:00:00");
-            //cout.flush();
-
+            /**
+             *\if actual time is bigger than the ticket expiring date
+             *  ticket is valid.
+             *\endif
+             *\ifnot
+             *  ticket rejected.
+             *\endif
+             */
             if (now >= ticket) {
                 lcd.print("Invalid!", true);
                 interface.errorFeedback();
@@ -71,13 +96,13 @@ int main() {
                 delay (500);
                 interface.setLed(LED_G, 1);
                 interface.bipFeedback();
-                delay (5000);
+                delay (2000);
             }
-            delete traveler, db;
+            delete db, traveler;
 
         } else {
 
-            /*! Payment*/
+            /** Payment */
             interface.setLed(LED_R, 1);
             lcd.print("Payment", true);
             delay (1500);
@@ -87,9 +112,8 @@ int main() {
             srand(time(NULL));
             int userRandId = rand() % 4 + 1;
 
-            Database *db = new Database(host, userName, pw);
-
-            if(!db->testConnection()) {
+            /** checking connection */
+            if (!db->testConnection()) {
                 lcd.print("CON_ERR", true);
                 break;
             }
@@ -97,24 +121,31 @@ int main() {
             User *seller = new User(*db, userRandId);
             Shop *shop = new Shop(*seller);
 
-            int itemRand = rand() % shop->getItems().size() + 1;
-            cout<<"1";
-            cout.flush();
-
+            int itemRand = rand() % shop->getItems().size();
             auto item = shop->getItems().at(itemRand);
 
+            /** printing item specs */
             lcd.print(item.getName(), true);
             lcd.print(std::to_string(item.getPrice()), false, 0, 1);
 
+            /** system listening for tag */
             interface.setLed(LED_G, 1);
             string UID = nfcReader.readTag();
-            cout<<UID;
 
             User *buyer = new User(*db, UID);
             Bank *buyerBank = new Bank(*buyer);
 
+            /** make the payment */
             string result = buyerBank->payment(item, *seller);
 
+            /**
+             *\if result is successful
+             * payment done.
+             *\endif
+             *\ifnot
+             * try again.
+             *\endif
+             */
             if (result == "SUCCESS!") {
                 lcd.print(result, true);
                 interface.bipFeedback();
@@ -123,10 +154,12 @@ int main() {
                 lcd.print("TRY AGAIN", false, 0, 1);
                 interface.errorFeedback();
             }
-            delete buyer, buyerBank, seller, shop, db;
 
+            delete db, buyer, buyerBank, seller, shop;
         }
     }
+    return 0;
 }
 
 
+#pragma clang diagnostic pop

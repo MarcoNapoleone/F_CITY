@@ -11,7 +11,6 @@ private:
     Database db;
     string name;
     string surname;
-
     string UID;
     int id;
     time_t birth_date;

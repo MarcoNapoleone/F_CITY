@@ -4,11 +4,13 @@
 User::User(Database &db, int id){
     this->db = db;
     this->fetchUserInfo(id);
+    this->setId(id);
 }
 
 User::User(Database &db, string UID){
     this->db = db;
     this->fetchUserInfo(UID);
+    this->setUid(UID);
 }
 
 void User::fetchUserInfo(const int id) {

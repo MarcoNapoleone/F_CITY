@@ -14,8 +14,8 @@ class TimeInfo {
 
 public:
 
-    time_t t = time(NULL);
-    tm *timePtr = localtime(&t);
+    time_t t;
+    tm *timePtr;
 
     /* to print time in human friendly format */
     string timeDate();
@@ -24,8 +24,10 @@ public:
     /* getter */
     tm *getTimePtr() const;
 
+    TimeInfo();
+
     /* defining a no std operator to compare current time and ticket expiring date */
-    bool operator >= (Ticket ticketExpDate);
+    bool operator >= (Ticket &ticketExpDate);
 
 };
 
