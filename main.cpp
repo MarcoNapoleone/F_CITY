@@ -27,9 +27,9 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
 
-#define host "tcp://remotemysql.com:3306"
-#define userName "bvYXzisyGu"
-#define pw "DfBbNrL9ER"
+#define host "jdbc:mysql://db4free.net:3306/fcitydb"
+#define userName "fcitydb"
+#define pw "KFEIUGEudu$"
 
 int main() {
 
@@ -37,13 +37,15 @@ int main() {
     Lcd lcd;
     Rc522 nfcReader;
 
+    lcd.scrollMessage(0, 36, "F_CITY project v1.4a test scrolling");
+
     /** \note infinite loop*/
     while (true) {
 
         Database *db = new Database(host, userName, pw);
 
         /**
-         * Choose which scenario to be executed:
+         * \brief Choose which scenario to be executed:
          * 0 -> PAYMENT,
          * 1 -> VALIDATE BUS TICKET"
          */
@@ -61,7 +63,7 @@ int main() {
             interface.setLed(LED_R, 0);
             interface.bipFeedback();
 
-            /** checking connection */
+            /// checking connection
             if (!db->testConnection()) {
                 lcd.print("CON_ERR", true);
                 break;

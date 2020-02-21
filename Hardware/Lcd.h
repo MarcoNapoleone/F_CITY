@@ -12,13 +12,17 @@
 using namespace std;
 
 class Lcd : public Hardware {
+private:
     int lcd;
+
 public:
     void setup();
 
     void print(string text, bool clear);
 
     void print(string, bool clear, int col, int row);
+
+    void scrollMessage (int line, int width, char *message);
 
     Lcd();
 };

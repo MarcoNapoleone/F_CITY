@@ -14,10 +14,10 @@ private:
     string UID;
     int id;
     time_t birth_date;
-    bool gender; //0 -> female; 1 -> male
+    bool gender; /** \note 0 -> female 1 -> male */
 
-    /* fetcher from db to ticket class */
-    void fetchUserInfo(const int id);
+
+    void fetchUserInfo(const int id); /** fetching  */
 
     void fetchUserInfo(string UID);
 
@@ -31,8 +31,7 @@ public:
 
     virtual ~User();
 
-
-    /* getter and setter */
+    /** getter and setter */
     void setName(const string &name);
 
     const Database &getDb() const;
