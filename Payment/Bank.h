@@ -7,6 +7,10 @@
 #include "Item.h"
 #include "../auxiliary-lib/TimeInfo.h"
 
+#define PAYMENT_SUCCESSFUL 1
+#define INSUF_BALANCE 0
+#define CON_ERR -1
+
 class Bank {
 
 private:
@@ -19,13 +23,13 @@ private:
 
     void updateBalanceInfo(float newBalance);
 
-    void recordTransaction(string type, User toUser, float moneyAmmount);
+    void recordTransaction(string type, User toUser, float moneyAmount);
 
 public:
 
     Bank(User &user);
 
-    string payment(Item item, User &toUser);
+    int payment(Item item, User &toUser);
 
     void setMoneyBalance(float moneyBalance);
 

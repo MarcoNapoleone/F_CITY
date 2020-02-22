@@ -8,10 +8,6 @@
 #include <wiringPi.h>
 #include <lcd.h>
 
-using namespace std;
-
-class Hardware {
-
 #define LCD_RS 25 //Register select pin
 #define LCD_E 24 //Enable Pin
 #define LCD_D4 23 //Data pin 4
@@ -24,16 +20,58 @@ class Hardware {
 #define BUTTON_R 28 //red button
 #define BUZ 4 // buzzer
 
-public:
-    Hardware();
+using namespace std;
 
-    int buttonChoice();
+namespace hardware {
 
-    void setLed(int led, bool state);
+    class DigitalIO {
+    public:
+        int buttonChoice();
 
-    void errorFeedback();
+        void listen();
 
-    void bipFeedback();
+    protected:
+        void setup();
+
+        void clear();
+
+        void setLed(int led, bool state);
+    };
+
+    class Lcd {
+    private:
+        int lcd;
+
+    public:
+        void print(string text, bool clear);
+
+        void print(string, bool clear, int col, int row);
+
+    protected:
+        void setup();
+    };
+
+    class Feedback : public DigitalIO, public Lcd {
+    private:
+
+    public:
+        void good();
+
+        void bad();
+
+        Feedback();
+
+    };
+
+    class Rc522 {
+    private:
+        std::string uid;
+
+    public:
+        std::string readTag();
+    };
+
+
 };
 
 

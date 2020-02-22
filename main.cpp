@@ -18,23 +18,21 @@
 #include "auxiliary-lib/TimeInfo.h"
 #include "Payment/Bank.h"
 #include "Payment/Shop.h"
-
-#include "Hardware/Lcd.h"
-#include "Hardware/Rc522.h"
 #include "Hardware/Hardware.h"
 
 /** \note Ignoring noreturn */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
 
-#define host "jdbc:mysql://db4free.net:3306/fcitydb"
+#define host "tcp://db4free.net:3306"
 #define userName "fcitydb"
 #define pw "KFEIUGEudu$"
 
+using namespace hardware;
+
 int main() {
 
-    Hardware interface;
-    Lcd lcd;
+    Feedback feedback;
     Rc522 nfcReader;
 
     /** \note infinite loop*/
@@ -47,35 +45,34 @@ int main() {
          * 0 -> PAYMENT,
          * 1 -> VALIDATE BUS TICKET"
          */
-        lcd.print("Choose: ", true);
-        int choice = interface.buttonChoice();
+        feedback.print("Choose: ", true);
+        int choice = feedback.buttonChoice();
+        feedback.good();
 
         /** Simulating 2 different scenarios */
         if (choice) {
 
             /** ticket validation */
-            interface.setLed(LED_R, 1);
-            lcd.print("Ticket", true);
-            lcd.print("stamp: ", false, 0, 1);
+            feedback.print("Ticket", true);
+            feedback.print("stamp: ", false, 0, 1);
+            feedback.good();
             delay(1500);
-            interface.setLed(LED_R, 0);
-            interface.bipFeedback();
 
             /// checking connection
             if (!db->testConnection()) {
-                lcd.print("CON_ERR", true);
+                feedback.print("CON_ERR", true);
+                feedback.bad();
                 break;
             }
 
             TimeInfo now;
-            lcd.print(now.timeDate(), true);
-            lcd.print("Stamp here", false, 0, 1);
-            interface.setLed(LED_G, 1);
-            interface.setLed(LED_R, 0);
+            feedback.print(now.timeDate(), true);
+            feedback.print("Stamp here", false, 0, 1);
 
             /** system listening for tag */
+            feedback.listen();
             User *traveler = new User(*db, nfcReader.readTag());
-            interface.bipFeedback();
+            feedback.good();
 
             Ticket ticket(*traveler);
 
@@ -87,35 +84,32 @@ int main() {
              *  ticket is valid.
              *\endif
              */
-            //cout<<mktime(now.getTimePtr())<< " " <<ticket.getTicketExpDate();
 
             if (now >= ticket) {
-                lcd.print("Invalid!", true);
-                interface.errorFeedback();
+                feedback.print("Invalid!", true);
+                feedback.bad();
+                delay(1500);
             } else {
-                lcd.print("Thanks!", true);
-                interface.setLed(LED_G, 0);
-                delay(500);
-                interface.setLed(LED_G, 1);
-                interface.bipFeedback();
+                feedback.print("Thanks!", true);
+                feedback.bad();
+                delay(1500);
             }
             delete db, traveler;
 
         } else {
 
             /** Payment */
-            interface.setLed(LED_R, 1);
-            lcd.print("Payment", true);
+            feedback.print("Payment", true);
+            feedback.good();
             delay(1500);
-            interface.setLed(LED_R, 0);
-            interface.bipFeedback();
 
             srand(time(NULL));
             int userRandId = rand() % 4 + 1;
 
             /** checking connection */
             if (!db->testConnection()) {
-                lcd.print("CON_ERR", true);
+                feedback.print("CON_ERR", true);
+                feedback.bad();
                 break;
             }
 
@@ -126,17 +120,18 @@ int main() {
             auto item = shop->getItems().at(itemRand);
 
             /** printing item specs */
-            lcd.print(item.getName(), true);
-            lcd.print(std::to_string(item.getPrice()), false, 0, 1);
+            feedback.print(item.getName(), true);
+            feedback.print(std::to_string(item.getPrice()), false, 0, 1);
 
             /** system listening for tag */
-            interface.setLed(LED_G, 1);
+            feedback.listen();
             string UID = nfcReader.readTag();
+            feedback.good();
 
             User *buyer = new User(*db, UID);
             Bank *buyerBank = new Bank(*buyer);
             /** make the payment */
-            string result = buyerBank->payment(item, *seller);
+            int result = buyerBank->payment(item, *seller);
 
             /**
              *\if result is successful
@@ -146,13 +141,14 @@ int main() {
              * try again.
              *\endif
              */
-            if (result == "SUCCESS!") {
-                lcd.print(result, true);
-                interface.bipFeedback();
+            if (result == PAYMENT_SUCCESSFUL) {
+                feedback.print("Success!", true);
+                feedback.good();
+                delay(1500);
             } else {
-                lcd.print("ERROR!", true);
-                lcd.print("TRY AGAIN", false, 0, 1);
-                interface.errorFeedback();
+                feedback.print("ERROR!", true);
+                feedback.bad();
+                delay(1500);
             }
 
             delete db, buyer, buyerBank, seller, shop;

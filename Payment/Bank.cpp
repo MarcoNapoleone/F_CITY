@@ -84,7 +84,8 @@ void Bank::recordTransaction(string type, User toUser, float moneyAmount) {
 
             sql::PreparedStatement *pstmt; //using prepared statement
 
-            pstmt = this->db.con->prepareStatement("INSERT INTO wallet_transactions (type, from_wallet_id, to_wallet_id, money_amount, date_time) VALUES (?, ?, ?, ?, ?)"); //sql injection
+            pstmt = this->db.con->prepareStatement(
+                    "INSERT INTO wallet_transactions (type, from_wallet_id, to_wallet_id, money_amount, date_time) VALUES (?, ?, ?, ?, ?)"); //sql injection
             pstmt->setString(1, type);
             pstmt->setInt(2, this->user.getId());
             pstmt->setInt(3, toUser.getId());
@@ -108,24 +109,27 @@ void Bank::recordTransaction(string type, User toUser, float moneyAmount) {
 
 }
 
-string Bank::payment(Item item, User &toUser) {
+int Bank::payment(Item item, User &toUser) {
 
     float difference = this->getMoneyBalance() - item.getPrice();
+    int result = CON_ERR
 
     try {
         if (this->db.testConnection()) {
             if (difference >= 0) {
+
                 this->updateBalanceInfo(difference);
                 Bank sellerBank(toUser);
                 sellerBank.updateBalanceInfo(sellerBank.getMoneyBalance() + item.getPrice());
                 this->recordTransaction("Payment", toUser, item.getPrice());
-                return ("SUCCESS!");
+                return (PAYMENT_SUCCESSFUL);
+
             } else
-                throw "Insufficient balance";
+                throw INSUF_BALANCE;
         } else
-            throw "Connection error";
+            throw result;
     }
-    catch (char const *error) {                                    //using char array because strings are not allowed
+    catch (int error) {                                    //using char array because strings are not allowed
         return (error);
     }
 }
