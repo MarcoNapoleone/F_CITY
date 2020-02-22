@@ -29,8 +29,7 @@ void Ticket::fetchTicketInfo() {
                 this->setCompanyName(res->getString("company_name"));
 
                 /* turn time from string format (yyyy-mm-dd hh:mm:ss) into unix local timestamp format */
-                this->setTicketExpDate(strToTime(
-                        (string) res->getString("bus_pass_exp_date"))); //casting from sql::string to std::string
+                this->setTicketExpDate(strToTime((string) res->getString("bus_pass_exp_date"))); //casting from sql::string to std::string
 
             }
             delete res;

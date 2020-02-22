@@ -37,8 +37,6 @@ int main() {
     Lcd lcd;
     Rc522 nfcReader;
 
-    lcd.scrollMessage(0, 36, "F_CITY project v1.4a test scrolling");
-
     /** \note infinite loop*/
     while (true) {
 
@@ -71,7 +69,7 @@ int main() {
 
             TimeInfo now;
             lcd.print(now.timeDate(), true);
-            lcd.print("Stamp ->", false, 0, 1);
+            lcd.print("Stamp here", false, 0, 1);
             interface.setLed(LED_G, 1);
             interface.setLed(LED_R, 0);
 
@@ -89,6 +87,8 @@ int main() {
              *  ticket is valid.
              *\endif
              */
+            //cout<<mktime(now.getTimePtr())<< " " <<ticket.getTicketExpDate();
+
             if (now >= ticket) {
                 lcd.print("Invalid!", true);
                 interface.errorFeedback();
@@ -98,7 +98,6 @@ int main() {
                 delay(500);
                 interface.setLed(LED_G, 1);
                 interface.bipFeedback();
-                delay(2000);
             }
             delete db, traveler;
 
@@ -136,7 +135,6 @@ int main() {
 
             User *buyer = new User(*db, UID);
             Bank *buyerBank = new Bank(*buyer);
-
             /** make the payment */
             string result = buyerBank->payment(item, *seller);
 

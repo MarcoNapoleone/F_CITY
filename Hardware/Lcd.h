@@ -22,7 +22,6 @@ public:
 
     void print(string, bool clear, int col, int row);
 
-    void scrollMessage (int line, int width, char *message);
 
     Lcd();
 };
