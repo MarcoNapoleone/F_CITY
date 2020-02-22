@@ -128,6 +128,8 @@ int main() {
             string UID = nfcReader.readTag();
             //feedback.good();
 
+            feedback.print("Processing...", true);
+
             User *buyer = new User(*db, UID);
             Bank *buyerBank = new Bank(*buyer);
             /** make the payment */
