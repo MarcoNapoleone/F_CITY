@@ -110,7 +110,7 @@ void hardware::Feedback::good() {
 
         digitalWrite(LED_G, HIGH);
         digitalWrite(BUZ, HIGH);
-        delay(100);
+        delay(50);
         digitalWrite(LED_G, LOW);
         digitalWrite(BUZ, LOW);
         delay(100);

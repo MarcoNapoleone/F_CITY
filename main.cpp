@@ -47,7 +47,7 @@ int main() {
          */
         feedback.print("Choose: ", true);
         int choice = feedback.buttonChoice();
-        feedback.good();
+        //feedback.good();
 
         /** Simulating 2 different scenarios */
         if (choice) {
@@ -91,7 +91,7 @@ int main() {
                 delay(1500);
             } else {
                 feedback.print("Thanks!", true);
-                feedback.bad();
+                feedback.good();
                 delay(1500);
             }
             delete db, traveler;
@@ -126,7 +126,7 @@ int main() {
             /** system listening for tag */
             feedback.listen();
             string UID = nfcReader.readTag();
-            feedback.good();
+            //feedback.good();
 
             User *buyer = new User(*db, UID);
             Bank *buyerBank = new Bank(*buyer);
