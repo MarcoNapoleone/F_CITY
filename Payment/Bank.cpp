@@ -112,7 +112,7 @@ void Bank::recordTransaction(string type, User toUser, float moneyAmount) {
 int Bank::payment(Item item, User &toUser) {
 
     float difference = this->getMoneyBalance() - item.getPrice();
-    int result = CON_ERR
+    int result = CON_ERR;
 
     try {
         if (this->db.testConnection()) {
