@@ -39,7 +39,7 @@ namespace hardware {
     };
 
     class Lcd {
-    private:
+    protected:
         int lcd;
 
     public:
