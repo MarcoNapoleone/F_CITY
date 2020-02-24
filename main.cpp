@@ -1,15 +1,15 @@
 
 /*!
- *  \brief     Simulation of two F_CITY scenarios, payment and ticket stamp.
- *  \details   https://sites.google.com/studentmail.unicas.it/fcity-project/home
- *  \author    Marco Napoleone
- *  \author    Alessandro Ricci
- *  \author    Roman Capraro
- *  \version   1.3
- *  \date      2019-2020
- *  \pre       get mySQL lib for your system
- *  \bug       unknown.
- *  \copyright GNU Public License.
+ *  @brief     Simulation of two F_CITY scenarios, payment and ticket stamp.
+ *  @details   https://sites.google.com/studentmail.unicas.it/fcity-project/home
+ *  @author    Marco Napoleone
+ *  @author    Alessandro Ricci
+ *  @author    Roman Capraro
+ *  @version   1.30.1+beta
+ *  @date      2019-2020
+ *  @pre       get mySQL lib for your system
+ *  @bug       possible memory leak, more testing needed
+ *  @copyright GNU Public License.
  */
 
 #include <iostream>
@@ -121,7 +121,7 @@ int main() {
 
             /** printing item specs */
             feedback.print(item.getName(), true);
-            feedback.print(std::to_string(item.getPrice()), false, 0, 1);
+            feedback.print(std::to_string(setPrecision(price, 2)) + " €", false, 0, 1);
 
             /** system listening for tag */
             feedback.listen();
@@ -136,12 +136,12 @@ int main() {
             int result = buyerBank->payment(item, *seller);
 
             /**
-             *\if result is successful
+             *@if result is successful
              * payment done.
-             *\endif
-             *\ifnot
+             *@endif
+             *@ifnot
              * try again.
-             *\endif
+             *@endif
              */
             if (result == PAYMENT_SUCCESSFUL) {
                 feedback.print("Success!", true);
