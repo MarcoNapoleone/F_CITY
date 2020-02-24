@@ -72,7 +72,7 @@ void hardware::Lcd::setup() {
     return;
 }
 
-void hardware::Lcd::print(T text) {
+template<typename T1> void hardware::Lcd::print(T1 text) {
 
     feedback.clear();
     lcdPosition(lcd, 0, 0);
@@ -80,7 +80,7 @@ void hardware::Lcd::print(T text) {
     return;
 }
 
-void hardware::Lcd::print(T text, const int col, const int row) {
+template<typename T2> void hardware::Lcd::print(T2 text, const int col, const int row) {
 
     lcdPosition(lcd, col, row);
     lcdPuts(lcd, to_string_with_precision(text, 2).c_str());
