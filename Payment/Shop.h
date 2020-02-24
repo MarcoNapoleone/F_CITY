@@ -40,14 +40,14 @@ public:
     const string &getShopName() const;
 };
 
-float setPrecision(float input, int precision) {
+float setFloatPrecision(float input, int precision) {
 
-    if(input < 100000) {
-        int intPart = (int) input;
+    if (input < 100000) {
+        int intPart = static_cast<int>(input);
         float decimalPart = input - intPart;
         decimalPart *= pow(10, precision);
-        int newDecimalPart = (int) decimalPart;
-        return(newDecimalPart/pow(10,precision) + intPart);
+        int newDecimalPart = static_cast<int>(decimalPart);
+        return (newDecimalPart / pow(10, precision) + intPart);
     } else return input;
 
 

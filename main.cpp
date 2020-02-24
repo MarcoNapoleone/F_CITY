@@ -84,7 +84,6 @@ int main() {
              *  ticket is valid.
              *\endif
              */
-
             if (now >= ticket) {
                 feedback.print("Invalid!", true);
                 feedback.bad();
@@ -121,7 +120,7 @@ int main() {
 
             /** printing item specs */
             feedback.print(item.getName(), true);
-            feedback.print(std::to_string(setPrecision(item.getPrice(), 2)) + " €", false, 0, 1);
+            feedback.print(std::to_string(setFloatPrecision(item.getPrice(), 2)) + " €", false, 0, 1);
 
             /** system listening for tag */
             feedback.listen();
