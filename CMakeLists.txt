@@ -15,8 +15,7 @@ add_executable(F_CITY main.cpp
         Payment/Item.cpp Payment/Item.h
         Hardware/Hardware.cpp Hardware/Hardware.h
         Hardware/wiringPi.h
-        auxiliary-lib/InterfaceFuncion.h
-        auxiliary-lib/InterfaceFuncion.cpp)
+        auxiliary-lib/InterfaceFunction.h)
 
 include_directories(/usr/local/include/mysql-connector-cpp/include) #using cpp compiler so the path is for mysql connector in the WSL
 target_link_libraries(F_CITY mysqlcppconn)

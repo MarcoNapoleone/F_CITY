@@ -6,7 +6,7 @@
 #include <fstream>
 #include <cstring>
 #include "Hardware.h"
-#include "../auxiliary-lib/InterfaceFuncion.h"
+#include "../auxiliary-lib/InterfaceFunction.h"
 
 using namespace hardware;
 
@@ -139,3 +139,13 @@ string hardware::Rc522::readTag() {
     file.close();
     return (UID);
 }
+
+template void hardware::Lcd::print(std::string text);
+template void hardware::Lcd::print(char const* text);
+template void hardware::Lcd::print(float text);
+template void hardware::Lcd::print(int text);
+
+template void hardware::Lcd::print(std::string text, const int col, const int row);
+template void hardware::Lcd::print(char const* text, const int col, const int row);
+template void hardware::Lcd::print(float text, const int col, const int row);
+template void hardware::Lcd::print(int text, const int col, const int row);
