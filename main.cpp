@@ -19,7 +19,6 @@
 #include "Payment/Bank.h"
 #include "Payment/Shop.h"
 #include "Hardware/Hardware.h"
-#include "auxiliary-lib/mathOperation.h"
 
 /** \note Ignoring noreturn */
 #pragma clang diagnostic push
@@ -46,7 +45,7 @@ int main() {
          * 0 -> PAYMENT,
          * 1 -> VALIDATE BUS TICKET"
          */
-        feedback.print("Choose: ", true);
+        feedback.print("Choose: ");
         int choice = feedback.buttonChoice();
         //feedback.good();
 
@@ -54,21 +53,21 @@ int main() {
         if (choice) {
 
             /** ticket validation */
-            feedback.print("Ticket", true);
-            feedback.print("stamp: ", false, 0, 1);
+            feedback.print("Ticket");
+            feedback.print("stamp: ", 0, 1);
             feedback.good();
             delay(1500);
 
             /// checking connection
             if (!db->testConnection()) {
-                feedback.print("CON_ERR", true);
+                feedback.print("CON_ERR");
                 feedback.bad();
                 break;
             }
 
             TimeInfo now;
-            feedback.print(now.timeDate(), true);
-            feedback.print("Stamp here", false, 0, 1);
+            feedback.print(now.timeDate());
+            feedback.print("Stamp here", 0, 1);
 
             /** system listening for tag */
             feedback.listen();
@@ -86,11 +85,11 @@ int main() {
              *\endif
              */
             if (now >= ticket) {
-                feedback.print("Invalid!", true);
+                feedback.print("Invalid!");
                 feedback.bad();
                 delay(1500);
             } else {
-                feedback.print("Thanks!", true);
+                feedback.print("Thanks!");
                 feedback.good();
                 delay(1500);
             }
@@ -99,7 +98,7 @@ int main() {
         } else {
 
             /** Payment */
-            feedback.print("Payment", true);
+            feedback.print("Payment");
             feedback.good();
             delay(1500);
 
@@ -108,7 +107,7 @@ int main() {
 
             /** checking connection */
             if (!db->testConnection()) {
-                feedback.print("CON_ERR", true);
+                feedback.print("CON_ERR");
                 feedback.bad();
                 break;
             }
@@ -120,15 +119,15 @@ int main() {
             auto item = shop->getItems().at(itemRand);
 
             /** printing item specs */
-            feedback.print(item.getName(), true);
-            feedback.print(std::to_string(setFloatPrecision(item.getPrice(), 2)) + " €", false, 0, 1);
+            feedback.print(item.getName());
+            feedback.print(item.getPrice() + " $", 0, 1);
 
             /** system listening for tag */
             feedback.listen();
             string UID = nfcReader.readTag();
             //feedback.good();
 
-            feedback.print("Processing...", true);
+            feedback.print("Processing...");
 
             User *buyer = new User(*db, UID);
             Bank *buyerBank = new Bank(*buyer);
@@ -144,11 +143,11 @@ int main() {
              *@endif
              */
             if (result == PAYMENT_SUCCESSFUL) {
-                feedback.print("Success!", true);
+                feedback.print("Success!");
                 feedback.good();
                 delay(1500);
             } else {
-                feedback.print("ERROR!", true);
+                feedback.print("ERROR!");
                 feedback.bad();
                 delay(1500);
             }

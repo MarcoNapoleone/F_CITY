@@ -30,10 +30,10 @@ namespace hardware {
 
         void listen();
 
+        void clear();
+
     protected:
         void setup();
-
-        void clear();
 
         void setLed(int led, bool state);
     };

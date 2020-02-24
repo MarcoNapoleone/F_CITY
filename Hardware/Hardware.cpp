@@ -6,6 +6,7 @@
 #include <fstream>
 #include <cstring>
 #include "Hardware.h"
+#include "../auxiliary-lib/InterfaceFuncion.h"
 
 using namespace hardware;
 
@@ -58,6 +59,8 @@ void hardware::DigitalIO::clear() {
 
     setLed(LED_G, 0);
     setLed(LED_R, 0);
+    clear();
+
     return;
 }
 
@@ -69,20 +72,19 @@ void hardware::Lcd::setup() {
     return;
 }
 
-void hardware::Lcd::print(string text, bool clear) {
+template<typename T>
+void hardware::Lcd::print(T text) {
 
-    if (clear) lcdClear(lcd);
-
+    feedback.clear();
     lcdPosition(lcd, 0, 0);
-    lcdPuts(lcd, text.c_str());
+    lcdPuts(lcd, to_string_with_precision(text, 2).c_str());
     return;
 }
 
-void hardware::Lcd::print(string text, bool clear, int col, int row) {
+void hardware::Lcd::print(T text, const int col, const int row) {
 
-    if (clear) lcdClear(lcd);
     lcdPosition(lcd, col, row);
-    lcdPuts(lcd, text.c_str());
+    lcdPuts(lcd, to_string_with_precision(text, 2).c_str());
     return;
 }
 
