@@ -19,6 +19,7 @@
 #include "Payment/Bank.h"
 #include "Payment/Shop.h"
 #include "Hardware/Hardware.h"
+#include "auxiliary-lib/mathOperation.h"
 
 /** \note Ignoring noreturn */
 #pragma clang diagnostic push
