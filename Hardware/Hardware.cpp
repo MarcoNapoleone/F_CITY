@@ -72,7 +72,6 @@ void hardware::Lcd::setup() {
     return;
 }
 
-template<typename T>
 void hardware::Lcd::print(T text) {
 
     feedback.clear();

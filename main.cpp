@@ -120,7 +120,8 @@ int main() {
 
             /** printing item specs */
             feedback.print(item.getName());
-            feedback.print(item.getPrice() + " $", 0, 1);
+            feedback.print("$ ", 1, 1);
+            feedback.print(item.getPrice(), 2, 1);
 
             /** system listening for tag */
             feedback.listen();

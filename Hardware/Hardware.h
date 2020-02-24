@@ -46,7 +46,7 @@ namespace hardware {
         template<typename T>
         void print(T text);
 
-        void print(T text, int col, int row);
+        void print(T text, cont int col, const int row);
 
     protected:
         void setup();
