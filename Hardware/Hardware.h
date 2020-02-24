@@ -43,10 +43,9 @@ namespace hardware {
         int lcd;
 
     public:
-        template<typename T>
-        void print(T text);
+        template<typename T> void print(T text);
 
-        void print(T text, cont int col, const int row);
+        template<typename T>void print(T text, const int col, const int row);
 
     protected:
         void setup();
