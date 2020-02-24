@@ -116,7 +116,7 @@ void hardware::Feedback::good() {
     return;
 }
 
-void hardware::Feedback:clear() {
+void hardware::Feedback::clear() {
 
     lcdClear(lcd);
     ledClear();
