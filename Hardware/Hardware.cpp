@@ -55,7 +55,7 @@ void hardware::DigitalIO::listen() {
     return;
 }
 
-void hardware::DigitalIO::clear() {
+void hardware::Feedback::clear() {
 
     setLed(LED_G, 0);
     setLed(LED_R, 0);

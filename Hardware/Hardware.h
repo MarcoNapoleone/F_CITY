@@ -30,8 +30,6 @@ namespace hardware {
 
         void listen();
 
-        void clear();
-
     protected:
         void setup();
 
@@ -58,6 +56,8 @@ namespace hardware {
         void good();
 
         void bad();
+
+        void clear();
 
         Feedback();
 
