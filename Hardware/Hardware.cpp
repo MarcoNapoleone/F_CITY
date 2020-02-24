@@ -74,7 +74,7 @@ void hardware::Lcd::setup() {
 
 template<typename T1> void hardware::Lcd::print(T1 text) {
 
-    feedback.clear();
+    clear();
     lcdPosition(lcd, 0, 0);
     lcdPuts(lcd, to_string_with_precision(text, 2).c_str());
     return;
