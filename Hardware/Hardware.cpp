@@ -50,31 +50,28 @@ void hardware::DigitalIO::setLed(int led, bool state) {
 
 void hardware::DigitalIO::listen() {
 
-    this->clear();
+    this->ledClear();
     setLed(LED_G, 1);
     return;
 }
 
-void hardware::Feedback::clear() {
+void hardware::DigitalIO::ledClear() {
 
     setLed(LED_G, 0);
     setLed(LED_R, 0);
-    clear();
-
     return;
 }
 
 void hardware::Lcd::setup() {
 
     wiringPiSetup();
-    lcd = lcdInit(2, 16, 4, LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7, 0, 0, 0,
-                  0); /** 2 rows, 16 col, 4 bit config */
+    lcd = lcdInit(2, 16, 4, LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7, 0, 0, 0, 0); /** 2 rows, 16 col, 4 bit config */
     return;
 }
 
 template<typename T1> void hardware::Lcd::print(T1 text) {
 
-    clear();
+    lcdClear();
     lcdPosition(lcd, 0, 0);
     lcdPuts(lcd, to_string_with_precision(text, 2).c_str());
     return;
@@ -117,6 +114,13 @@ void hardware::Feedback::good() {
         delay(100);
     }
     return;
+}
+
+void hardware::Feedback:clear() {
+
+    lcdClear();
+    ledClear();
+
 }
 
 string hardware::Rc522::readTag() {

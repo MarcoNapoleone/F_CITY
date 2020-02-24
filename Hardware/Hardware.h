@@ -30,6 +30,8 @@ namespace hardware {
 
         void listen();
 
+        void ledClear();
+
     protected:
         void setup();
 
