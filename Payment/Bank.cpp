@@ -1,7 +1,3 @@
-//
-// Created by makon on 07/01/2020.
-//
-
 #include "Bank.h"
 #include "Item.h"
 
@@ -129,17 +125,13 @@ int Bank::payment(Item item, User &toUser) {
         } else
             throw result;
     }
-    catch (int error) {                                    //using char array because strings are not allowed
+    catch (int error) {
         return (error);
     }
 }
 
 void Bank::setMoneyBalance(float moneyBalance) {
     Bank::moneyBalance = moneyBalance;
-}
-
-const string &Bank::getBankCode() const {
-    return bankCode;
 }
 
 void Bank::setBankCode(const string &bankCode) {

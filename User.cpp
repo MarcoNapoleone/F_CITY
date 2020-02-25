@@ -111,28 +111,8 @@ void User::setGender(bool gender) {
     User::gender = gender;
 }
 
-const string &User::getName() const {
-    return name;
-}
-
 void User::setUid(const string &uid) {
     UID = uid;
-}
-
-const string &User::getSurname() const {
-    return surname;
-}
-
-string User::getUID() const {
-    return UID;
-}
-
-time_t User::getBirthDate() const {
-    return birth_date;
-}
-
-bool User::getGender() const {
-    return gender;
 }
 
 int User::getId() const {

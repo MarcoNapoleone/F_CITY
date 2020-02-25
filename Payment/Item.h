@@ -1,12 +1,11 @@
-//
-// Created by makon on 28/01/2020.
-//
-
 #ifndef F_CITY_ITEM_H
 #define F_CITY_ITEM_H
 
 #include "../auxiliary-lib/Database.h"
 
+/**
+ * this is an item that represents a shop product
+ */
 class Item {
 
     string name;
@@ -23,7 +22,6 @@ public:
     float getPrice() const;
 
     void setPrice(float price);
-
 
 };
 

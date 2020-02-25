@@ -3,6 +3,9 @@
 
 using namespace std;
 
+/**
+ * @bug this could be a cyber-security problem
+ */
 Database::Database(const string &host, const string &userName, const string &pw) {
 
     Database::host = host;

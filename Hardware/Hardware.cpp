@@ -65,11 +65,13 @@ void hardware::DigitalIO::ledClear() {
 void hardware::Lcd::setup() {
 
     wiringPiSetup();
-    lcd = lcdInit(2, 16, 4, LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7, 0, 0, 0, 0); /** 2 rows, 16 col, 4 bit config */
+    lcd = lcdInit(2, 16, 4, LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7, 0, 0, 0,
+                  0); /** 2 rows, 16 col, 4 bit config */
     return;
 }
 
-template<typename T1> void hardware::Lcd::print(T1 text) {
+template<typename T1>
+void hardware::Lcd::print(T1 text) {
 
     lcdClear(lcd);
     lcdPosition(lcd, 0, 0);
@@ -77,7 +79,8 @@ template<typename T1> void hardware::Lcd::print(T1 text) {
     return;
 }
 
-template<typename T2> void hardware::Lcd::print(T2 text, const int col, const int row) {
+template<typename T2>
+void hardware::Lcd::print(T2 text, const int col, const int row) {
 
     lcdPosition(lcd, col, row);
     lcdPuts(lcd, to_string_with_precision(text, 2).c_str());
@@ -141,11 +144,17 @@ string hardware::Rc522::readTag() {
 }
 
 template void hardware::Lcd::print(std::string text);
-template void hardware::Lcd::print(char const* text);
+
+template void hardware::Lcd::print(char const *text);
+
 template void hardware::Lcd::print(float text);
+
 template void hardware::Lcd::print(int text);
 
 template void hardware::Lcd::print(std::string text, const int col, const int row);
-template void hardware::Lcd::print(char const* text, const int col, const int row);
+
+template void hardware::Lcd::print(char const *text, const int col, const int row);
+
 template void hardware::Lcd::print(float text, const int col, const int row);
+
 template void hardware::Lcd::print(int text, const int col, const int row);

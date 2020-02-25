@@ -5,7 +5,9 @@
 #ifndef F_CITY_DATABASE_H
 #define F_CITY_DATABASE_H
 
-/* mysql connector libraries */
+/**
+ * @include mysql connector libraries
+ */
 #include "mysql_connection.h"
 #include <cppconn/driver.h>
 #include <cppconn/exception.h>
@@ -15,32 +17,42 @@
 
 using namespace std;
 
+/**
+ * this is the main data source that help to fetch all information
+ * once created will be passed as reference to all others server based object constructors
+ */
 class Database {
+
 private:
 
-    /* database credentials declared as members */
     string host;
     string userName;
     string pw;
 
 public:
 
-    /** sql var */
+    /**
+     * sql var
+     */
     sql::Driver *driver;
     sql::Connection *con;
 
-    /* default constructor */
-    // Database() = default;
-
-    /* constructor */
+    /**
+     * constructor
+     * @param host the IP address
+     * @param userName the username credential
+     * @param pw the password
+     */
     Database(const string &host, const string &userName, const string &pw);
 
     Database() = default;
 
-    /* boolean method for initialization of sql var and testing if connection works */
+    /**
+     * this is used to check the connection
+     * @return 1 if the connection is online
+     */
     bool testConnection();
 
-    /* destructor */
     virtual ~Database();
 
 };

@@ -67,10 +67,6 @@ time_t Ticket::getTicketExpDate() const {
     return ticketExpDate;
 }
 
-const string &Ticket::getCompanyName() const {
-    return companyName;
-}
-
 /*const string &Ticket::getTravelerName() const {
     return travelerName;
 }

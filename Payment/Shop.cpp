@@ -1,7 +1,3 @@
-//
-// Created by makon on 28/01/2020.
-//
-
 #include "Shop.h"
 #include <time.h>
 
@@ -96,8 +92,4 @@ Shop::~Shop() {
 
     delete (&items);
 
-}
-
-const string &Shop::getShopName() const {
-    return shopName;
 }

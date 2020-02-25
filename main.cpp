@@ -1,11 +1,11 @@
 
-/*!
+/**
  *  @brief     Simulation of two F_CITY scenarios, payment and ticket stamp.
  *  @details   https://sites.google.com/studentmail.unicas.it/fcity-project/home
  *  @author    Marco Napoleone
  *  @author    Alessandro Ricci
  *  @author    Roman Capraro
- *  @version   1.30.1+beta
+ *  @version   1.30.5+beta
  *  @date      2019-2020
  *  @pre       get mySQL lib for your system
  *  @bug       possible memory leak, more testing needed
@@ -20,25 +20,31 @@
 #include "Payment/Shop.h"
 #include "Hardware/Hardware.h"
 
-/** \note Ignoring noreturn */
+/**
+ * @note Ignoring noreturn
+ */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
 
-#define host "tcp://db4free.net:3306"
-#define userName "fcitydb"
-#define pw "KFEIUGEudu$"
+
+#define HOST "tcp://db4free.net:3306" /**< @def HOST defining database credential: IP address */
+#define USER_NAME "fcitydb" /**< @def USER_NAME defining database credential: user name */
+#define PASSWORD "KFEIUGEudu$" /**< @def PASSWORD defining database credential: password */
 
 using namespace hardware;
 
+/**@file */
 int main() {
 
     Feedback feedback;
     Rc522 nfcReader;
 
-    /** \note infinite loop*/
+    /**
+     * @note infinite loop
+     */
     while (true) {
 
-        Database *db = new Database(host, userName, pw);
+        Database *db = new Database(HOST, USER_NAME, PASSWORD);
 
         /**
          * \brief Choose which scenario to be executed:
@@ -58,7 +64,7 @@ int main() {
             feedback.good();
             delay(1500);
 
-            /// checking connection
+            /** checking connection */
             if (!db->testConnection()) {
                 feedback.print("CON_ERR");
                 feedback.bad();

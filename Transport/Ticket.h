@@ -6,7 +6,11 @@
 
 using namespace std;
 
+/**
+ * this is the ticket that the user use to get on board on buses
+ */
 class Ticket {
+
 private:
 
     Database db;
@@ -14,34 +18,36 @@ private:
     time_t ticketExpDate;
     string companyName;
 
-    int companyId;
+    //int companyId;
     //string travelerName;
     //string travelerSurname;
 
 public:
 
-    /* constructor */
+    /**
+     * constructor
+     * @param user the ticket owner
+     */
     Ticket(User &user);
 
-    /* fetcher from db to ticket class, passing db as reference */
+    /**
+     * this fetch all ticket info from the database
+     */
     void fetchTicketInfo();
 
-    /* setter and getter */
     void setTicketExpDate(time_t ticketExpDate);
 
     void setCompanyName(const string &companyName);
 
-    void setTravelerName(const string &travelerName);
-
-    void setTravelerSurname(const string &travelerSurname);
-
     time_t getTicketExpDate() const;
 
-    const string &getCompanyName() const;
+    //void setTravelerName(const string &travelerName);
 
-    const string &getTravelerName() const;
+    //void setTravelerSurname(const string &travelerSurname);
 
-    const string &getTravelerSurname() const;
+    //const string &getTravelerName() const;
+
+    //const string &getTravelerSurname() const;
 
 };
 
